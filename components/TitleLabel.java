@@ -2,7 +2,6 @@ package components;
 
 import java.awt.Color;
 import java.awt.Font;
-
 import javax.swing.JLabel;
 
 public class TitleLabel extends JLabel {
