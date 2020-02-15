@@ -1,12 +1,17 @@
 default:
-	javac components/TitleLabel.java
+	javac components/*.java
 	javac mytimer/MyTimer.java
 	javac mycommonmethods/FileIO.java
+	javac speedwords/*.java
  
- run:
+ timer:
 	java mytimer/MyTimer
+
+ speed:
+	java speedwords/SpeedWords
  
  clean:
 	rm components/*.class
 	rm mytimer/*.class
 	rm mycommonmethods/*.class
+	rm speedwords/*.class

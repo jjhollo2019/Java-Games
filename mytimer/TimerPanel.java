@@ -20,7 +20,7 @@ public class TimerPanel extends JPanel implements Runnable{
     private Thread timerThread;
 
     public TimerPanel(long time, Font font){
-        this.time = time;
+        setTime(time);
         setFont(font);
         height = font.getSize();
         FontMetrics fm = getFontMetrics(font);
