@@ -38,16 +38,16 @@ public class SpeedWords extends JFrame{
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
         leftPanel.setBackground(TAN);
-        add(leftPanel);
+        mainPanel.add(leftPanel);
 
         //score panel
         leftPanel.add(scorePanel);
 
         //timer panel
         JPanel timerPanel = new JPanel();
-        timerPanel.setBackground(new Color(255, 0, 0));
+        timerPanel.setBackground(Color.RED);
         leftPanel.add(timerPanel);
-        swTimerPanel.setBackground(new Color(255, 0, 0));
+        swTimerPanel.setBackground(Color.RED);
         timerPanel.add(swTimerPanel);
 
         //game panel
@@ -58,8 +58,8 @@ public class SpeedWords extends JFrame{
         textArea.setMargin(insets);
         textArea.setEditable(false);
         textArea.setFont(LIST_FONT);
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setViewportView(textArea);
+
+        JScrollPane scrollPane = new JScrollPane(textArea);
         Dimension size = new Dimension(100, 0);
         scrollPane.setPreferredSize(size);
         mainPanel.add(scrollPane);
@@ -79,13 +79,12 @@ public class SpeedWords extends JFrame{
     public static void main(String[] args){
         try{
             String className = UIManager.getCrossPlatformLookAndFeelClassName();
+            UIManager.setLookAndFeel(className);
             SwingUtilities.invokeLater(new Runnable(){
                 public void run(){
                     new SpeedWords();
                 }
             });
-        } catch(Exception e){
-            e.printStackTrace();
-        }
+        } catch(Exception e){ }
     }
 }

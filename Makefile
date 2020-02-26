@@ -1,7 +1,7 @@
 default:
 	javac components/*.java
 	javac mytimer/MyTimer.java
-	javac mycommonmethods/FileIO.java
+	javac mycommonmethods/*.java
 	javac speedwords/*.java
  
  timer:

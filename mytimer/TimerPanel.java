@@ -72,7 +72,8 @@ public class TimerPanel extends JPanel implements Runnable{
             try{
                 Thread.sleep(1000);
             } catch(InterruptedException e){
-                e.printStackTrace();
+                String message = "Interrupted";
+                JOptionPane.showMessageDialog(null, message);
                 return;
             }
         }
