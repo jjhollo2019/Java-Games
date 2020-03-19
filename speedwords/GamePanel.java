@@ -22,6 +22,9 @@ public class GamePanel extends JPanel{
     private ArrayList<TileSet> tileSets = new ArrayList<TileSet>();
     private ArrayList<String> sevenLetterWords = new ArrayList<String>();
     private Random rand = new Random();
+    private Dictionary dictionary = new Dictionary();
+    private ArrayList<String> formedWords = new ArrayList<String>();
+    private boolean outOfTime = false;
     private TileSet movingTiles;
     private int mouseX;
     private int mouseY;
@@ -35,7 +38,9 @@ public class GamePanel extends JPanel{
             public void mousePressed(MouseEvent e){
                 int x = e.getX();
                 int y = e.getY();
-                clicked(x, y);
+                int mouseButton = e.getButton();
+                boolean leftClicked = mouseButton == MouseEvent.BUTTON1;
+                clicked(x, y, leftClicked);
             }
 
             public void mouseReleased(MouseEvent e){
@@ -65,7 +70,17 @@ public class GamePanel extends JPanel{
 
     private void released(){
         //if dropped on other tiles, connect it to the tiles
-
+        if(movingTiles != null){
+            boolean addedToTiles = false;
+            for(int i = 0; i < tileSets.size() && !addedToTiles; i++){
+                TileSet tileSet = tileSets.get(i);
+                addedToTiles = tileSet.insertTiles(movingTiles);
+                if(addedToTiles){
+                    movingTiles = null;
+                    checkWord(tileSet);
+                }
+            }
+        }
 
         //if not dropped on other tiles, return it to the list of tile sets
         if(movingTiles != null){
@@ -75,20 +90,30 @@ public class GamePanel extends JPanel{
             TileSet newTileSet = new TileSet(s, x, y);
             tileSets.add(newTileSet);
             movingTiles = null;
+            checkWord(newTileSet);
         }
         repaint();
     }
 
-    private void clicked(int x, int y){
-        if(movingTiles == null){
+    private void clicked(int x, int y, boolean leftClicked){
+        if(movingTiles == null && !outOfTime){
             mouseX = x;
             mouseY = y;
 
             for(int i = 0; i < tileSets.size(); i++){
                 TileSet tileSet = tileSets.get(i);
                 if(tileSet.contains(mouseX, mouseY)){
-                    movingTiles = tileSet;
-                    tileSets.remove(i);
+                    if(leftClicked){
+                        movingTiles = tileSet.removeAndReturn1TileAt(x, y);
+                        if(tileSet.getNumberOfTiles() == 0){
+                            tileSets.remove(i);
+                        } else {
+                            checkWord(tileSet);
+                        }
+                    } else {
+                        movingTiles = tileSet;
+                        tileSets.remove(i);
+                    }
                 }
             }
             repaint();
@@ -112,18 +137,59 @@ public class GamePanel extends JPanel{
         }
     }
 
-    public Dimension getPreferredSize(){
-        Dimension size = new Dimension(WIDTH, HEIGHT);
-        return size;
-    }
-
     public void restart(){
         tileSets.clear();
+        formedWords.clear();
         int range = sevenLetterWords.size();
         int choose = rand.nextInt(range);
         String s = sevenLetterWords.get(choose);
         TileSet tileSet = new TileSet(s, START_X, START_Y);
         tileSets.add(tileSet);
+        checkWord(tileSet);
+        outOfTime = false;
+        movingTiles = null;
         repaint();
     }
+
+    public void checkWord(TileSet tileSet){
+        String s = tileSet.toString();
+        boolean isAWord = dictionary.isAWord(s);
+        boolean foundBefore = formedWords.contains(s);
+        if(isAWord && !foundBefore){
+            tileSet.setValid(true);
+            speedWords.addToScore(tileSet.getPoints());
+
+            //if this is the first word found
+            //add it to the list
+            if(formedWords.size() == 0){
+                formedWords.add(s);
+            } else {
+                //otherwise, insert word before the
+                //first word it is aplhabetically less than
+                boolean added = false;
+                for(int i = 0; i < formedWords.size() && !added; i++){
+                    String formedWord = formedWords.get(i);
+                    if(s.compareTo(formedWord) < 0){
+                        formedWords.add(i, s);
+                        added = true;
+                    }
+                }
+
+                //if the word is not less than any of the words,
+                //add it to the end of the list
+                if(!added){
+                    formedWords.add(s);
+                }
+            }
+
+            speedWords.setWordList(formedWords);
+        } else {
+            tileSet.setValid(false);
+        }
+    }
+    
+    public Dimension getPreferredSize(){return new Dimension(WIDTH, HEIGHT);}
+
+    public void setOutOfTime(boolean outOfTime){this.outOfTime = outOfTime;}
+
 }

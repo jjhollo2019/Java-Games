@@ -2,6 +2,7 @@ package speedwords;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -9,6 +10,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import java.awt.BorderLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Font;
@@ -74,6 +76,7 @@ public class SpeedWords extends JFrame{
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        swTimerPanel.start();
     }
 
     public static void main(String[] args){
@@ -86,5 +89,31 @@ public class SpeedWords extends JFrame{
                 }
             });
         } catch(Exception e){ }
+    }
+
+    public void setWordList(ArrayList<String> wordList){
+        String s = "";
+        for(int i = 0; i < wordList.size(); i++){
+            String word = wordList.get(i);
+            s += word + "\n";
+        }
+        textArea.setText(s);
+    }
+
+    public void addToScore(int newPoints){scorePanel.addToScore(newPoints);}
+
+    public void outOfTime(){
+        gamePanel.setOutOfTime(true);
+        String message = "Do you want to play again?";
+        int option = JOptionPane.showConfirmDialog(this, "Play again?", message, JOptionPane.YES_NO_OPTION);
+        if(option == JOptionPane.YES_OPTION){
+            textArea.setText("");
+            scorePanel.reset();
+            gamePanel.restart();
+            swTimerPanel.setTime(60L);
+            swTimerPanel.start();
+        } else {
+            System.exit(0);
+        }
     }
 }

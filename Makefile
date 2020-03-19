@@ -3,6 +3,7 @@ default:
 	javac mytimer/MyTimer.java
 	javac mycommonmethods/*.java
 	javac speedwords/*.java
+	javac matchthree/*.java
  
  timer:
 	java mytimer/MyTimer
@@ -10,8 +11,12 @@ default:
  speed:
 	java speedwords/SpeedWords
  
+ match:
+	java matchthree/MatchThree
+
  clean:
 	rm components/*.class
 	rm mytimer/*.class
 	rm mycommonmethods/*.class
 	rm speedwords/*.class
+	rm matchthree/*.class
