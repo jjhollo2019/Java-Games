@@ -39,10 +39,6 @@ public class TileSet{
         }
     }
 
-    public void setValid(boolean valid){
-        this.valid = valid;
-    }
-
     public void changeXY(int changeX, int changeY){
         x += changeX;
         y += changeY;
@@ -145,4 +141,6 @@ public class TileSet{
     public Integer getNumberOfTiles(){return tiles.size();}
 
     public LetterTile getTile(int i){return tiles.get(i);}
+
+    public void setValid(boolean valid){this.valid = valid;}
 }

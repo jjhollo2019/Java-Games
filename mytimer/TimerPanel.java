@@ -32,10 +32,6 @@ public class TimerPanel extends JPanel implements Runnable{
         g.setColor(Color.BLACK);
         g.drawString(timeString, 0, height);
     }
-    public Dimension getPreferredSize(){
-        Dimension size = new Dimension(width, height);
-        return size;
-    }
 
     public void setTime(long time){
         this.time = time;
@@ -80,7 +76,7 @@ public class TimerPanel extends JPanel implements Runnable{
         timesUp();
     }
 
-    public long getTime(){
-        return time;
-    }
+    public long getTime(){return time;}
+    
+    public Dimension getPreferredSize(){return new Dimension(width, height);}
 }

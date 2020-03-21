@@ -31,9 +31,7 @@ public class LetterTile extends JPanel{
         int index = ALPHABET.indexOf(letter);
         points = LETTER_POINTS[index];
 
-        if(image == null){
-            image = FileIO.readImageFile(this, IMAGE_NAME);
-        }
+        if(image == null)image = FileIO.readImageFile(this, IMAGE_NAME);
     }
 
     public void draw(Graphics g, int x, int y){
@@ -60,16 +58,9 @@ public class LetterTile extends JPanel{
         g.drawString(pointsString, pointsX, pointsY);
     }
 
-    public Dimension getPreferredSize(){
-        Dimension size = new Dimension(SIZE, SIZE);
-        return size;
-    }
+    public Dimension getPreferredSize(){return new Dimension(SIZE, SIZE);}
 
-    public String getLetter(){
-        return letter;
-    }
+    public String getLetter(){return letter;}
 
-    public int getPoints(){
-        return points;
-    }
+    public int getPoints(){return points;}
 }

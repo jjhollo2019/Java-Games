@@ -105,11 +105,8 @@ public class GamePanel extends JPanel{
                 if(tileSet.contains(mouseX, mouseY)){
                     if(leftClicked){
                         movingTiles = tileSet.removeAndReturn1TileAt(x, y);
-                        if(tileSet.getNumberOfTiles() == 0){
-                            tileSets.remove(i);
-                        } else {
-                            checkWord(tileSet);
-                        }
+                        if(tileSet.getNumberOfTiles() == 0)tileSets.remove(i);
+                        else checkWord(tileSet);
                     } else {
                         movingTiles = tileSet;
                         tileSets.remove(i);
@@ -132,9 +129,7 @@ public class GamePanel extends JPanel{
         }
 
         //draw moving tiles
-        if(movingTiles != null){
-            movingTiles.draw(g);
-        }
+        if(movingTiles != null) movingTiles.draw(g);
     }
 
     public void restart(){
@@ -161,9 +156,8 @@ public class GamePanel extends JPanel{
 
             //if this is the first word found
             //add it to the list
-            if(formedWords.size() == 0){
-                formedWords.add(s);
-            } else {
+            if(formedWords.size() == 0) formedWords.add(s);
+            else {
                 //otherwise, insert word before the
                 //first word it is aplhabetically less than
                 boolean added = false;
@@ -183,13 +177,10 @@ public class GamePanel extends JPanel{
             }
 
             speedWords.setWordList(formedWords);
-        } else {
-            tileSet.setValid(false);
-        }
+        } else tileSet.setValid(false);
     }
     
     public Dimension getPreferredSize(){return new Dimension(WIDTH, HEIGHT);}
 
     public void setOutOfTime(boolean outOfTime){this.outOfTime = outOfTime;}
-
 }

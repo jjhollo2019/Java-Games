@@ -78,7 +78,7 @@ public class MyTimer extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public static void main(String[] args){
@@ -94,14 +94,6 @@ public class MyTimer extends JFrame {
                 new MyTimer();
             }
         });
-    }
-
-    public void start(){
-        timerPanel.start();
-    }
-
-    public void stop(){
-        timerPanel.stop();
     }
 
     public void addAnHour(){
@@ -120,4 +112,8 @@ public class MyTimer extends JFrame {
         timerPanel.stop();
         timerPanel.setTime(0);
     }
+
+    public void start(){timerPanel.start();}
+
+    public void stop(){timerPanel.stop();}
 }

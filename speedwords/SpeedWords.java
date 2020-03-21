@@ -75,7 +75,7 @@ public class SpeedWords extends JFrame{
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         swTimerPanel.start();
     }
 
@@ -94,19 +94,15 @@ public class SpeedWords extends JFrame{
     public void setWordList(ArrayList<String> wordList){
         String s = "";
         for(int i = 0; i < wordList.size(); i++){
-            String word = wordList.get(i);
-            s += word + "\n";
+            s += wordList.get(i) + "\n";
         }
         textArea.setText(s);
     }
 
-    public void addToScore(int newPoints){scorePanel.addToScore(newPoints);}
-
     public void outOfTime(){
         gamePanel.setOutOfTime(true);
         String message = "Do you want to play again?";
-        int option = JOptionPane.showConfirmDialog(this, "Play again?", message, JOptionPane.YES_NO_OPTION);
-        if(option == JOptionPane.YES_OPTION){
+        if(JOptionPane.showConfirmDialog(this, "Play again?", message, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
             textArea.setText("");
             scorePanel.reset();
             gamePanel.restart();
@@ -116,4 +112,6 @@ public class SpeedWords extends JFrame{
             System.exit(0);
         }
     }
+
+    public void addToScore(int newPoints){scorePanel.addToScore(newPoints);}
 }

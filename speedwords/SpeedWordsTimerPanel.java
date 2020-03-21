@@ -1,7 +1,6 @@
 package speedwords;
 
 import java.awt.Font;
-import java.lang.reflect.Method;
 
 import mytimer.TimerPanel;
 
@@ -16,7 +15,5 @@ public class SpeedWordsTimerPanel extends TimerPanel{
     }
 
     @Override
-    protected void timesUp(){
-        speedWords.outOfTime();
-    }
+    protected void timesUp(){speedWords.outOfTime();}
 }
